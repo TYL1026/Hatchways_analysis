@@ -2,6 +2,10 @@
 import sys
 import json
 from copy import deepcopy
+from json import JSONEncoder
+class encoder(JSONEncoder):
+        def default(self, o):
+            return o.__dict__
 class Mark:
 	def __init__(self,test_id,student_id,mark):
 		self.test_id = test_id
@@ -160,7 +164,7 @@ def main():
 
 	for student in studentInfo:
 		student.updateTotal()
-	print(json.dumps(studentInfo))
-	# output = open("test.json","w+")
+	output = open("test.json","w+")
+	output.write(json.dumps(studentInfo, indent=4, cls=encoder))
 
 main()
